@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Rules Extraction Utility - Rules Central</title>
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"/>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!-- Inter Font -->
+    <link href="https://rsms.me/inter/inter.css" rel="stylesheet">
+    <!-- Unified Styles -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    {% include 'header.html' %}
+</head>
+<body>
+<main class="container animated-content" role="main">
+    <!-- Hero Section -->
+    <section aria-labelledby="rulesExtractionTitle" class="section hero-section">
+        <div class="row">
+            <div class="col s12">
+                <h1 id="rulesExtractionTitle">FormWorks Rules Extraction Utility</h1>
+                <p>Easily extract rules from FormWorks.</p>
+            </div>
+        </div>
+    </section>
+    <!-- Extraction Action -->
+    <section aria-label="Extraction Action" class="section">
+        <div class="row">
+            <div class="col s12 center-align">
+                <button aria-label="Extract FormWorks Rules" class="btn-large btn-primary waves-effect waves-light"
+                        id="executeButton">
+                    <i class="material-icons left">build</i>Extract FormWorks Rules
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- Execution Status -->
+    <section aria-label="Execution Status" class="section">
+        <div class="row">
+            <div class="col s12">
+                <div aria-live="polite" class="card-panel yellow lighten-4" id="execution-status" role="status">
+                    <h2 class="center-align">Execution Status</h2>
+                    <p class="center-align" id="execution-message">Awaiting execution...</p>
+                    <pre class="hide" id="output-message"></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- Spinner Overlay -->
+<div aria-hidden="true" class="spinner-overlay" id="spinner">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+                <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+<!-- Materialize JS -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="{{ url_for('static', filename='js/api_test_utility.js') }}"></script>
+</body>
+</html>

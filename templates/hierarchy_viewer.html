@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Rule Hierarchy - Rules Central</title>
+    <!-- MATERIALIZE CSS & ICONS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!-- Custom Styles -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+    {% include 'header.html' %}
+</head>
+<body class="light-mode" data-diagram-name="{{ diagram_name }}" data-root-name="{{ root_name }}">
+<div class="container hierarchy-container">
+    <h4 class="hierarchy-title">
+        Rule Hierarchy for <span id="root-name-display"></span>
+    </h4>
+    <!-- SEARCH BAR -->
+    <div class="row card-panel teal lighten-5 search-bar-container">
+        <div class="search-filter-row">
+            <div class="input-field">
+                <i class="material-icons prefix">search</i>
+                <input aria-label="Search rules" id="hierarchy-search" placeholder="Search rules..." type="text"/>
+            </div>
+        </div>
+        <div class="search-btn-group right-align" style="margin-top: 1rem;">
+            <button class="btn waves-effect waves-light blue" id="search-btn" style="margin-right: 0.5rem;">
+                <i class="material-icons left">search</i>SEARCH
+            </button>
+            <button class="btn waves-effect waves-light blue" id="filter-reset">
+                <i class="material-icons left">refresh</i>RESET
+            </button>
+        </div>
+    </div>
+    <!-- EXPAND/COLLAPSE BUTTONS -->
+    <div class="row expand-collapse-row">
+        <div class="col s12 right-align">
+            <button class="btn waves-effect waves-light blue" id="expand-all" style="margin-right: 0.5rem;">
+                <i class="material-icons left">add_circle_outline</i>EXPAND ALL
+            </button>
+            <button class="btn waves-effect waves-light blue" id="collapse-all">
+                <i class="material-icons left">remove_circle_outline</i>COLLAPSE ALL
+            </button>
+        </div>
+    </div>
+    <!-- LOADING SPINNER -->
+    <div id="hierarchy-spinner">Loading hierarchy...</div>
+    <!-- MAIN LAYOUT: Tree + Details -->
+    <div class="row hierarchy-row">
+        <!-- TREE COLUMN -->
+        <div class="tree-col">
+            <ul class="tree-outline" id="diagram-outline" role="tree"></ul>
+        </div>
+        <!-- DETAILS COLUMN -->
+        <div class="details-col">
+            <div class="card rule-details" id="rule-details-card">
+                <div id="rule-details-header">
+                    <h5 id="rule-title">Select a Rule</h5>
+                </div>
+                <div id="rule-details-content">
+                    <div id="top-level-fields"></div>
+                    <div id="attributes-section">
+                        <div class="attributes-title">Attributes</div>
+                        <table class="rule-attributes-table responsive-table">
+                            <tbody id="attributes-table-body"></tbody>
+                        </table>
+                    </div>
+                    <div id="actions-section">
+                        <div class="actions-title">Actions</div>
+                        <table class="rule-attributes-table responsive-table">
+                            <tbody id="actions-table-body"></tbody>
+                        </table>
+                    </div>
+                    <!-- Single collapsible for all ParamList & ParamListOMRIndex attributes -->
+                    <ul class="collapsible" id="param-collapsible">
+                        <li>
+                            <div class="collapsible-header">Parameters</div>
+                            <div class="collapsible-body">
+                                <table class="rule-attributes-table">
+                                    <thead>
+                                    <tr>
+                                        <th>ParamList (Column 1)</th>
+                                        <th>ParamListOMRIndex (Column 2)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="paramlist-table-body"></tbody>
+                                </table>
+                            </div>
+                        </li>
+                    </ul>
+                    <button class="btn-small grey lighten-1" id="show-more-json" style="margin-top: 0.6rem;">
+                        SHOW RAW JSON
+                    </button>
+                    <div id="raw-json-block"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- OPTIONAL MODAL (if needed) -->
+<div class="modal" id="rule-modal">
+    <div class="modal-content">
+        <h4 id="modal-rule-title"></h4>
+        <table class="rule-attributes-table">
+            <tbody id="modal-attributes-table-body"></tbody>
+        </table>
+        <button class="btn red" id="close-modal">Close</button>
+    </div>
+</div>
+<!-- MATERIALIZE JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="{{ url_for('static', filename='js/hierarchy_viewer.js') }}"></script>
+</body>
+</html>

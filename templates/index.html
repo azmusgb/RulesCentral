@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Home Page - Rules Central</title>
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"/>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!-- Inter Font -->
+    <link href="https://rsms.me/inter/inter.css" rel="stylesheet"/>
+    <!-- Unified Styles -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    {% include 'header.html' %}
+</head>
+<body>
+<main class="container animated-content">
+    <!-- Hero Section -->
+    <section class="section hero-section center-align">
+        <div class="row">
+            <div class="col s12">
+                <img alt="Rules Central Logo" class="responsive-img logo-main" src="{{ url_for('static', filename='images/RulesCentralLogo.png') }}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <h1>Rules Central</h1>
+                <p class="tagline">Enhancing Claims Processing Efficiency</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m8 offset-m2">
+                <p class="intro-text">
+                    Rules Central is a comprehensive solution for Claims Product, Business,
+                    and Platform teams. It extracts, visualizes, and publishes claims
+                    pre-processing rules, streamlining your operations and boosting productivity.
+                </p>
+                <p class="intro-text">
+                    By replacing manual processes with dynamic, API-enabled workflows,
+                    Rules Central provides complete traceability, facilitates testing, and
+                    enhances production support.
+                </p>
+            </div>
+        </div>
+    </section>
+    <!-- Features Section -->
+    <section class="section features-section">
+        <div class="row">
+            <div class="col s12">
+                <h2 class="section-title center-align">Key Features</h2>
+            </div>
+        </div>
+        <div class="row features-row">
+            <div class="col s12 m4">
+                <div class="card hoverable feature-card">
+                    <div class="card-header center-align">
+                        <i class="material-icons">visibility</i>
+                        <h5>Visualizes Workflows</h5>
+                    </div>
+                    <div class="card-content">
+                        <p>Dynamic diagrams present your processes clearly and intuitively, ensuring rapid comprehension.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4">
+                <div class="card hoverable feature-card">
+                    <div class="card-header center-align">
+                        <i class="material-icons">assignment</i>
+                        <h5>Facilitates Test Planning</h5>
+                    </div>
+                    <div class="card-content">
+                        <p>Comprehensive maps help identify test cases and pinpoint regression areas with precision.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4">
+                <div class="card hoverable feature-card">
+                    <div class="card-header center-align">
+                        <i class="material-icons">support_agent</i>
+                        <h5>Enhances Production Support</h5>
+                    </div>
+                    <div class="card-content">
+                        <p>Detailed visual representations aid in troubleshooting, ensuring minimal downtime.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% include 'footer.html' %}
+<!-- Materialize JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

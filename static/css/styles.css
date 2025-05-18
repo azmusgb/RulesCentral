@@ -1,0 +1,1467 @@
+/* =====================================================
+Rules Central
+-----------------------------------------------------
+
+/* 1. Global Variables & Reset */
+:root {
+/* New Color Palette (fresh, modern, bold) */
+--color-white: #ffffff;
+--color-black: #1E293B;
+/* Deep slate for text */
+--color-light-bg: #f9fafb;
+/* Light background */
+--color-dark-bg: #1f2937;
+/* Dark mode background */
+
+/* Primary & Accent Colors */
+--color-primary: #3B82F6;
+/* Vibrant Blue */
+--color-primary-hover: #2563EB;
+/* Darker Blue on hover */
+--color-secondary: #475569;
+/* Subdued slate accent */
+--color-accent: #F97316;
+/* Bold orange accent */
+--color-gradient-start: #3B82F6;
+/* Gradient start (blue) */
+--color-gradient-end: #2563EB;
+/* Gradient end (blue) */
+
+/* Typography */
+--font-family: 'Inter', sans-serif;
+--font-family-alt: 'Roboto', sans-serif;
+--font-size-header: 2.5rem;
+--font-size-subheader: 1.5rem;
+--font-size-base: 1rem;
+--font-size-small: 0.85rem;
+
+/* Spacing */
+--spacing-small: 0.5rem;
+--spacing-medium: 1rem;
+--spacing-large: 1.5rem;
+--spacing-extra-large: 2rem;
+
+/* Shadows & Border Radius */
+--shadow-light: 0 2px 4px rgba(0, 0, 0, 0.08);
+--shadow-medium: 0 6px 12px rgba(0, 0, 0, 0.15);
+--shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.15);
+--border-radius: 0.5rem;
+
+/* Transitions */
+--transition-speed: 0.3s;
+--transition-ease: ease-in-out;
+}
+
+*,
+*::before,
+*::after {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+html {
+scroll-behavior: smooth;
+font-size: 100%;
+}
+
+/* 2. Body & Global Setup */
+body {
+font-family: 'Roboto', sans-serif;
+background: linear-gradient(to bottom, #f0f4f8, #ffffff);
+color: #333;
+}
+
+/* Reusable margin utilities */
+.mb-0 {
+margin-bottom: 0 !important;
+}
+.mb-1 {
+margin-bottom: 1rem !important;
+}
+.mt-2 {
+margin-top: 2rem !important;
+}
+margin-top: .75rem !important;
+}
+/* Relative positioning for input field */
+.relative {
+position: relative;
+}
+/* Search input styles */
+.search-input {
+border: 1px solid #ccc;
+border-radius: 0.4rem;
+font-size: 0.9rem;
+width: 100%;
+}
+/* Full width button */
+.full-width {
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 0.3rem;
+font-size: 0.9rem;
+}
+/* 3. Page Containers & Animations */
+main.container {
+margin-top: 2rem;
+padding: 2rem 1rem;
+background-color: #fff;
+border-radius: 8px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+from {
+opacity: 0;
+transform: translateY(20px);
+}
+
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+/* 6) Editor container & diagram container can remain as is or be further refined. */
+.editor-container {
+margin-bottom: 1.5rem;
+border-radius: 0.4rem;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+overflow: hidden;
+}
+
+.diagram-container {
+height: 80vh; /* Adjust as needed */
+min-height: 600px; /* Ensures it's never too small */
+overflow: hidden; /* Prevents unnecessary scrollbars */
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+#diagram-preview {
+width: 100%;
+height: 100%;
+}
+
+
+.diagram-container .mermaid svg {
+display: block;
+margin: 0 auto;
+/* center horizontally */
+}
+
+/* Diagram container and .mermaid svg defaults */
+position: relative;
+}
+
+display: block;
+max-width: 100%;
+overflow: auto;
+height: 80vh;
+}
+
+
+/* Highlight style for searching text in the diagram */
+.svg-highlight {
+fill: red;
+background-color: yellow;
+font-weight: bold;
+}
+
+/* 5. Hierarchy Viewer (Rules, Trees, etc.) */
+.hierarchy-container {
+margin: 2rem auto;
+max-width: 1600px;
+padding: 2rem;
+background-color: #fff;
+border-radius: 12px;
+box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.hierarchy-title {
+text-align: center;
+margin-bottom: 2rem;
+font-size: 2.5rem;
+color: #00796b;
+}
+.hierarchy-row {
+display: flex;
+gap: 2rem;
+min-height: 80vh;
+}
+/* Search & Filter Row */
+.filter-container {
+display: flex;
+flex-wrap: wrap;
+gap: 1rem;
+align-items: center;
+margin-bottom: 1.5rem; /* Increased margin for better spacing */
+}
+/* ========== SPINNER OVERLAY ========== */
+#hierarchy-spinner {
+display: none;
+padding: 1rem;
+text-align: center;
+color: #00796b;
+}
+
+.filter-container .input-field {
+flex-grow: 1;
+min-width: 200px;
+}
+
+.filter-container .input-field input {
+border: 1px solid #ddd;
+border-radius: var(--border-radius);
+padding: 0.75rem; /* Increased padding for better usability */
+transition: border var(--transition-speed) var(--transition-ease);
+}
+
+.filter-container .input-field input:focus {
+border-color: var(--color-primary);
+box-shadow: 0 0 5px rgba(38, 166, 154, 0.3);
+}
+
+.filter-container .btn {
+min-width: 120px;
+border-radius: var(--border-radius);
+transition: background-color var(--transition-speed) var(--transition-ease);
+padding: 0.5rem 1rem; /* Added padding for better button size */
+}
+
+.filter-container .btn:hover {
+background-color: var(--secondary-color);
+}
+
+/* Expand/Collapse Buttons */
+.expand-collapse-btns {
+margin-bottom: 1.5rem; /* Increased margin for better spacing */
+display: flex;
+gap: 0.5rem;
+justify-content: center;
+}
+      .expand-collapse-buttons {
+          margin-top: 10px;
+          text-align: right;
+        }
+.expand-collapse-btns .btn {
+border-radius: var(--border-radius);
+transition: background-color var(--transition-speed) var(--transition-ease);
+}
+
+.expand-collapse-btns .btn:hover {
+background-color: var(--secondary-color);
+}
+
+/* Two-column layout for tree & details */
+.hierarchy-row {
+display: flex;
+flex-wrap: nowrap;
+gap: 1rem;
+}
+
+.tree-col {
+flex: 2;
+padding-right: 1rem;
+max-height: 70vh;
+overflow-y: auto;
+background-color: #f1f8e9;
+border-right: 1px solid #ddd;
+position: relative;
+}
+
+.tree-outline,
+.tree-outline ul {
+list-style: none;
+margin: 0;
+padding: 0;
+position: relative;
+}
+.tree-outline ul::before {
+content: "";
+position: absolute;
+top: 0;
+bottom: 0;
+left: 0.4em;
+border-left: 1px solid #ccc;
+}
+.tree-outline li {
+position: relative;
+margin: 0;
+padding: 0 0 0 0.8em;
+display: block;
+}
+.tree-outline li::before {
+content: "";
+position: absolute;
+top: 1em;
+left: 0;
+width: 0.4em;
+border-top: 1px solid #ccc;
+}
+.tree-outline li:last-child::before {
+background: #fff;
+}
+.tree-node {
+display: block;
+padding: 4px 0;
+cursor: pointer;
+transition: background-color 0.2s;
+}
+.tree-node:hover {
+background-color: rgba(0,0,0,0.06);
+}
+.tree-node.focused {
+background-color: rgba(38,166,154,0.2);
+}
+.child-list {
+display: none;
+margin: 0;
+padding: 0;
+}
+.child-list.expanded {
+display: block;
+}
+/* Special styling for action pseudo-nodes */
+.tree-node.action-node {
+border-left: 4px solid var(--secondary-color);
+padding-left: 8px;
+background-color: #fffaf0;
+}
+/* ========== DETAILS COLUMN ========== */
+.details-col {
+flex: 1;
+padding-left: 1rem;
+max-height: 75vh;
+overflow-y: auto;
+}
+
+/* ========== CONDENSED RULE DETAILS ========== */
+#rule-title {
+margin: 0 0 0.5rem 0;
+font-size: 1.25rem;
+font-weight: bold;
+color: #00796b;
+}
+.rule-attributes-table {
+width: 100%;
+border-collapse: collapse;
+font-size: 0.9rem;
+}
+.rule-attributes-table th,
+.rule-attributes-table td {
+padding: 0.4rem 0.8rem;
+text-align: left;
+vertical-align: top;
+}
+.rule-attributes-table th {
+background-color: #f4f4f4;
+font-weight: bold;
+white-space: nowrap;
+width: 35%;
+}
+.attributes-title,
+.actions-title {
+margin: 0.6rem 0 0.3rem 0;
+font-size: 1rem;
+font-weight: 500;
+color: #555;
+}
+#raw-json-block {
+display: none;
+margin-top: 0.6rem;
+padding: 0.8rem;
+border: 1px solid #eee;
+border-radius: 6px;
+background-color: #fafafa;
+white-space: pre;
+font-size: 0.85rem;
+}
+
+/* ========== PARAMETERS COLLAPSIBLE ========== */
+#param-collapsible {
+margin-top: 1rem;
+}
+#paramlist-table-body th,
+#paramlist-table-body td {
+padding: 0.4rem 0.8rem;
+font-size: 0.9rem;
+vertical-align: top;
+}
+
+
+/* Rule Attributes Table */
+.rule-attributes-table {
+width: 100%;
+border-collapse: collapse; /* Collapse borders for cleaner table */
+margin-top: 10px; /* Added margin for spacing between table and other content */
+}
+
+.rule-attributes-table th,
+.rule-attributes-table td {
+padding: 6px 10px; /* Reduced padding for tighter table layout */
+text-align: left;
+vertical-align: top;
+}
+
+.rule-attributes-table th {
+font-weight: 600;
+color: #333;
+width: 30%; /* Reduced width for better compactness */
+white-space: nowrap;
+}
+
+background-color: #f9f9f9;
+border-radius: var(--border-radius);
+word-wrap: break-word; /* Allow text to break if too long */
+}
+
+/* Additional Responsive Fixes */
+@media (max-width: 768px) {
+
+.hierarchy-row {
+flex-direction: column;
+}
+.tree-col,
+.details-col {
+max-height: none;
+overflow-y: visible;
+padding: 0;
+border: none;
+}
+
+.rule-attributes-table th,
+padding: 4px 8px; /* Further reduced padding on smaller screens */
+}
+}
+
+
+/* 1) Extra margin so content is below the fixed navbar, if you use .navbar-fixed. */
+.main-content {
+margin-top: 70px;
+padding: 2rem;
+max-width: 1200px;
+margin-left: auto;
+margin-right: auto;
+}
+
+/* 2) We wrap the entire row in a lightly styled toolbar container. */
+.toolbar-row {
+margin-bottom: 1.5rem;
+background: #f8fafc;
+border: 1px solid #e2e2e2;
+border-radius: 0.5rem;
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+padding: 1rem;
+}
+
+/* Raw JSON block */
+#raw-json-block {
+display: none;
+background-color: #f1f1f1;
+padding: 1rem;
+border-radius: var(--border-radius);
+margin-top: 1rem;
+white-space: pre-wrap;
+font-family: monospace;
+max-height: 300px;
+overflow-y: auto;
+border: 1px solid #ddd;
+}
+
+.btn-small {
+margin-top: 1rem;
+border-radius: var(--border-radius);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+flex-direction: column;
+}
+
+.tree-col,
+max-width: 100%;
+border-right: none;
+}
+
+border-bottom: 1px solid #e0e0e0;
+padding-bottom: 1rem;
+margin-bottom: 1rem;
+}
+}
+
+/* 6. Sidebar & Navigation */
+.sidebar {
+display: flex;
+flex-direction: column;
+padding: 20px;
+min-height: 100vh;
+background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+border-right: 1px solid #e0e0e0;
+box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-title {
+font-size: 1.4rem;
+font-weight: 600;
+margin-bottom: 1rem;
+color: var(--color-black);
+}
+
+/* Diagram List for non-card layout */
+.diagram-list {
+flex-grow: 1;
+overflow-y: auto;
+margin-bottom: 1rem;
+padding: 0;
+list-style-type: none;
+}
+
+.diagram-list li a {
+display: block;
+padding: 8px 12px;
+border-radius: 4px;
+color: #37474f;
+text-decoration: none;
+transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.diagram-list li a:hover {
+background-color: #eaeaea;
+transform: scale(1.01);
+}
+
+.diagram-list li a.active {
+background-color: var(--color-primary);
+color: var(--color-white);
+transform: scale(1.02);
+}
+
+.sidebar-buttons {
+display: flex;
+flex-direction: column;
+gap: 10px;
+margin-top: 20px;
+}
+
+.btn-action {
+width: 100%;
+background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+color: var(--color-white);
+border: none;
+border-radius: var(--border-radius);
+padding: 10px 15px;
+font-weight: 500;
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: var(--shadow-light);
+transition:
+background 0.4s var(--transition-ease),
+transform var(--transition-speed) var(--transition-ease),
+box-shadow var(--transition-speed) var(--transition-ease);
+}
+
+.btn-action i.material-icons {
+margin-right: 8px;
+}
+
+.btn-action:hover,
+.btn-action:focus {
+background: linear-gradient(135deg, var(--color-primary-hover), var(--color-primary));
+transform: translateY(-3px) scale(1.02);
+box-shadow: var(--shadow-medium);
+}
+
+.btn-action:active {
+transform: translateY(0) scale(1);
+box-shadow: var(--shadow-light);
+}
+
+.btn-action.active {
+background-color: var(--color-secondary);
+}
+
+/* Floating Button */
+.btn-floating.btn-large {
+width: 30px;
+height: 30px;
+border-radius: 50%;
+font-size: 1.1rem;
+box-shadow: var(--shadow-medium);
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+/* 7. Card-Based Diagram Layout */
+.diagram-cards {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+.diagram-card {
+background-color: #fff;
+border-radius: 6px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+padding: 10px;
+margin-bottom: 10px;
+transition: transform 0.2s, box-shadow 0.2s;
+cursor: pointer;
+}
+
+.diagram-card:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.diagram-card-content {
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.diagram-title {
+margin: 0;
+font-size: 1rem;
+font-weight: 500;
+color: #37474f;
+}
+
+
+/* 9. Pagination */
+.pagination {
+display: flex;
+justify-content: center;
+margin-top: 10px;
+}
+
+#pagination .page-item {
+display: inline-block;
+border-radius: 8px;
+overflow: hidden;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+transition: transform 0.2s ease-in-out;
+}
+
+#pagination .page-link {
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 8px;
+text-decoration: none;
+font-weight: 600;
+color: #0071bc;
+background: #f0f0f0;
+transition: background 0.3s, color 0.3s, transform 0.2s;
+padding: 0 12px;
+}
+
+#pagination .page-link:hover {
+background: #005f9c;
+color: #fff;
+transform: translateY(-2px);
+}
+
+#pagination .active .page-link {
+background: #0071bc;
+color: #fff;
+font-weight: bold;
+pointer-events: none;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#pagination .page-link:focus {
+outline: none;
+box-shadow: 0 0 0 3px rgba(0, 113, 188, 0.5);
+}
+
+/* 10. Global Button Styles */
+.btn {
+border-radius: 20px;
+transition: background-color 0.3s ease, transform 0.2s ease;
+display: inline-flex !important;
+align-items: center !important;
+justify-content: center !important;
+}
+
+.btn:hover {
+background-color: #0071BC;
+transform: scale(1.05);
+}
+/* 11. Modern Minimal Header / Navigation */
+.navbar {
+background: linear-gradient(135deg, #37474f, #263238);
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+min-height: 56px;
+display: flex;
+align-items: center;
+}
+
+.navbar-fixed {
+position: fixed;
+top: 0;
+width: 100%;
+z-index: 1000;
+}
+
+.nav-content {
+width: 100%;
+max-width: 1600px;
+margin: 0 auto;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 1rem;
+}
+
+.nav-wrapper {
+display: flex;
+align-items: center;
+justify-content: flex-end;
+max-width: 1200px;
+margin: 0 auto;
+padding: 0 1rem;
+flex-wrap: wrap;
+}
+
+.brand-logo {
+display: flex;
+align-items: center;
+text-decoration: none;
+color: #fff;
+margin-left: 1rem;
+}
+
+.brand-logo .nav-logo {
+height: 42px;
+margin-right: 0.5rem;
+transition: transform 0.3s;
+}
+
+.brand-logo:hover .nav-logo {
+transform: scale(1.05);
+}
+
+.header-title {
+font-size: 1.2rem;
+font-weight: 600;
+color: #fff;
+}
+
+.nav-links {
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+}
+
+.nav-links li {
+margin: 0 0.5rem;
+}
+
+.nav-links li a:hover {
+background-color: rgba(255, 255, 255, 0.1);
+transform: translateY(-2px);
+}
+
+.sidenav-trigger {
+color: #fff;
+font-size: 1.8rem;
+margin-right: 1rem;
+cursor: pointer;
+display: none;
+}
+
+.hide-on-med-and-down {
+display: flex;
+}
+
+@media (max-width: 600px) {
+display: none;
+}
+
+display: block;
+position: relative;
+}
+}
+//* Spinner Overlay (for entire page or partial) */
+.spinner-overlay {
+position: fixed; /* Changed to fixed for better coverage */
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: rgba(0, 0, 0, 0.7); /* Darker background for better contrast */
+z-index: 1000;
+display: flex;
+flex-direction: column; /* Stack elements vertically */
+align-items: center;
+justify-content: center;
+color: #fff; /* White text for better visibility */
+font-family: 'Arial', sans-serif; /* Change font for better readability */
+}
+    .result-card {
+          margin-bottom: 20px;
+        }
+/* Spinner Animation */
+.cool-spinner {
+border: 8px solid rgba(255, 255, 255, 0.3);
+border-top: 8px solid #3B82F6; /* Primary color for the spinner */
+border-radius: 50%;
+width: 60px;
+height: 60px;
+animation: spin 1s linear infinite;
+margin-bottom: 20px; /* Space between spinner and text */
+}
+
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+
+/* Loading Message */
+#loading-message {
+font-size: 18px; /* Larger font size */
+font-weight: bold; /* Bold text */
+margin-bottom: 10px; /* Space between message and progress bar */
+}
+
+/* Progress Bar */
+.progress-bar {
+width: 100%;
+height: 5px;
+background-color: #3B82F6; /* Primary color */
+transition: width 0.3s ease; /* Smooth transition */
+opacity: 0; /* Initially hidden */
+}
+
+/* Show progress bar when loading */
+.show-progress {
+opacity: 1; /* Show progress bar */
+}
+/* 12. Search Bar (also used for Diagram or Catalog) */
+#search-svg-input:focus {
+border-color: #3B82F6;
+box-shadow: 0 0 4px rgba(59, 130, 246, 0.3);
+}
+
+/* Clear icon styles */
+.clear-icon {
+position: absolute;
+top: 50%;
+right: 0.8rem;
+transform: translateY(-50%);
+cursor: pointer;
+font-size: 1rem;
+color: #aaa;
+}
+
+.clear-icon:hover {
+color: #888;
+}
+
+#search-svg-button {
+width: 100%;
+font-size: 0.9rem;
+}
+
+#search-svg-button i.material-icons {
+font-size: 1.1rem;
+margin-right: 0.25rem;
+}
+      #noResults {
+          text-align: center;
+          color: #777;
+          margin-top: 20px;
+          display: none;
+        }
+/* 13. Additional Layout / Card Stuff */
+
+/* =====================================================
+Rules Central - Card Related Styles
+----------------------------------------------------- */
+
+/* Card & Action Buttons */
+.card {
+padding: 2.5rem; /* More padding for better spacing */
+max-width: 600px; /* Wider upload area */
+margin: 0 auto;
+border-radius: 12px;
+box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card:hover {
+transform: translateY(-2px); /* Slight elevation on hover */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card .card-title {
+font-size: 1rem; /* Smaller font size for compactness */
+font-weight: 500;
+color: #37474f;
+margin-bottom: 5px; /* Tight margin under the title */
+text-overflow: ellipsis;
+white-space: nowrap;
+overflow: hidden; /* Ensure text is truncated properly */
+}
+
+.card .card-content {
+padding: 1.5rem; /* More padding for better spacing */
+background-color: #ffffff; /* Keep contrast */
+font-size: 1rem; /* Ensure readability */
+color: #333; /* Darker text for better visibility */
+max-height: none; /* Remove height restriction */
+overflow: visible; /* Ensure all elements are visible */
+margin-bottom: 10px; /* Increase margin */
+}
+
+.card .card-action {
+display: flex;
+justify-content: space-evenly;
+align-items: center;
+padding: 5px 10px; /* Reduced padding for compactness */
+gap: 5px; /* Smaller gap between buttons */
+}
+
+.card .card-action .btn-small {
+min-width: 30px; /* Reduced button width */
+min-height: 30px; /* Reduced button height */
+padding: 5px; /* Tightened padding inside the buttons */
+font-size: 0.75rem; /* Smaller font size for buttons */
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%; /* Circular buttons */
+transition: background 0.3s, transform 0.2s;
+}
+
+.card .card-action .btn-small i.material-icons {
+font-size: 1rem; /* Icon size adjustment */
+margin: 0; /* Remove margin for better alignment */
+}
+
+.card .card-action .btn-small:hover {
+background-color: #3B82F6; /* Add a hover effect with a primary color */
+transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.card.small {
+height: 120px;
+}
+
+
+
+/* 6. Feature Card (Additional Styling) */
+.feature-card {
+border: none;
+border-radius: var(--border-radius);
+overflow: hidden;
+transition:
+transform var(--transition-speed) var(--transition-ease),
+box-shadow var(--transition-speed) var(--transition-ease);
+}
+
+.feature-card:hover {
+transform: translateY(-5px) scale(1.02);
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card .card-header {
+padding: var(--spacing-medium);
+background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
+color: var(--color-white);
+text-align: center;
+border-top-left-radius: var(--border-radius);
+border-top-right-radius: var(--border-radius);
+}
+
+.feature-card .card-header i {
+font-size: 3rem;
+margin-bottom: 0.5rem;
+}
+
+.feature-card .card-header h5 {
+margin: 0;
+font-size: 1.25rem;
+font-weight: 600;
+}
+
+.feature-card .card-content {
+padding: var(--spacing-medium);
+background-color: var(--color-white);
+color: var(--color-secondary);
+}
+
+/* 7. Rule Details Card - More Compact Layout */
+.card.rule-details {
+padding: 5px; /* Reduced padding for more compact cards */
+border-radius: var(--border-radius);
+box-shadow: var(--shadow-light);
+overflow: hidden;
+transition: box-shadow var(--transition-speed) var(--transition-ease);
+min-height: 80px; /* Set a minimum height for the card */
+}
+
+.card.rule-details:hover {
+box-shadow: var(--shadow-hover);
+}
+
+.card.rule-details .card-title {
+margin: 0;
+padding: 0.75rem; /* Reduced padding for a more compact title */
+background-color: var(--color-primary);
+color: #fff;
+font-size: 1.1rem; /* Smaller font size for the title */
+font-weight: 500;
+text-overflow: ellipsis;
+white-space: nowrap;
+overflow: hidden; /* Ensures long titles don't overflow */
+}
+
+.card.rule-details .card-content {
+padding: 0.75rem; /* Reduced padding inside the card content */
+background-color: var(--card-bg);
+font-size: 0.9rem; /* Smaller font size for the content */
+color: #555;
+}
+
+/* 8. Rule Attributes Table Styling */
+width: 100%;
+border-collapse: collapse; /* Collapse borders for cleaner table */
+margin-top: 10px; /* Added margin for spacing between table and other content */
+}
+
+.rule-attributes-table th,
+padding: 6px 10px; /* Reduced padding for tighter table layout */
+text-align: left;
+vertical-align: top;
+}
+
+font-weight: 600;
+color: #333;
+width: 30%; /* Reduced width for better compactness */
+white-space: nowrap;
+}
+
+background-color: #f9f9f9;
+border-radius: var(--border-radius);
+word-wrap: break-word; /* Allow text to break if too long */
+}
+
+/* 9. Responsive Design (Mobile Fixes) */
+@media (max-width: 600px) {
+min-height: 70px; /* Further reduced card height on smaller screens */
+}
+
+font-size: 0.9rem; /* Slightly smaller title font on mobile */
+}
+
+min-width: 25px; /* Even smaller buttons on mobile */
+min-height: 25px;
+}
+
+font-size: 0.9rem; /* Smaller icons on mobile */
+}
+}
+
+
+/* 14. Home Page Enhancements */
+.hero-section {
+padding: 3rem 0;
+text-align: center;
+}
+
+.hero-section img.logo-main {
+max-width: 150px;
+height: auto;
+margin-bottom: 1rem;
+transition: transform 0.3s;
+}
+
+.hero-section img.logo-main:hover {
+transform: scale(1.05);
+}
+
+.hero-section h1 {
+font-size: 2.8rem;
+font-weight: 700;
+color: #0071bc;
+margin-bottom: 0.5rem;
+}
+
+.hero-section .tagline {
+font-size: 1.3rem;
+color: #555;
+margin-bottom: 1rem;
+}
+
+.hero-section .intro-text {
+font-size: 1.1rem;
+color: #666;
+margin-bottom: 1rem;
+line-height: 1.6;
+}
+
+/* 15. Config & API Test Utility */
+h4.center-align {
+font-size: 2rem;
+font-weight: 600;
+color: #0071bc;
+margin-bottom: 1rem;
+}
+h4 {
+color: #0071BC;
+}
+
+p.center-align {
+font-size: 1.1rem;
+color: #555;
+}
+
+table.highlight {
+margin-top: 1rem;
+}
+/* Enhanced Highlight Styles */
+.highlight {
+stroke: var(--color-primary, #26a69a);
+stroke-width: 3px;
+fill: rgba(255, 235, 59, 0.5);
+animation: pulse 1.5s infinite;
+transition: fill 0.3s ease-in-out, stroke 0.3s ease-in-out;
+}
+
+/* More focused highlight for foreignObject elements */
+.foreign-highlight {
+border: 2px dashed var(--color-primary, #26a69a);
+background-color: rgba(255, 235, 59, 0.5);
+animation: pulse 1.5s infinite;
+transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
+}
+
+/* Custom styles for improved UX */
+.file-upload-zone {
+border: 2px dashed #009688;
+padding: 30px;
+text-align: center;
+cursor: pointer;
+border-radius: 8px;
+transition: background-color 0.3s;
+}
+.file-upload-zone:hover {
+background-color: #e0f2f1;
+}
+.file-summary {
+margin-top: 10px;
+font-size: 1rem;
+color: #555;
+text-align: center;
+}
+.progress {
+margin-top: 15px;
+}
+
+/* Input field styling (overrides) */
+input[type="text"],
+textarea {
+border-bottom: 1px solid #0071bc !important;
+transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+border-bottom-color: #005f9c !important;
+}
+
+/* Light Theme */
+body.light-mode {
+background-color: #ffffff;
+color: #000000;
+}
+
+/* Dark Theme */
+body.dark-mode {
+background-color: #1e1e1e;
+color: #ffffff;
+}
+
+/* Additional styles for elements in dark mode */
+.dark-mode .spinner-overlay {
+background: rgba(0, 0, 0, 0.9);
+}
+
+.dark-mode .cool-spinner {
+border-top: 8px solid #bb86fc; /* Change spinner color for dark mode */
+}
+
+/* Adjust other elements as needed */
+
+/* 16. Catalog Page Enhancements */
+main.container {
+padding: 2rem;
+border-radius: 8px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+margin-top: 70px;
+animation: fadeIn 1s ease-out;
+}
+
+h1#catalogTitle {
+font-size: 2.5rem;
+font-weight: 600;
+color: #0071bc;
+margin-bottom: 0.5rem;
+}
+
+.catalog {
+margin-top: 2rem;
+}
+
+.catalog-container {
+margin-top: 80px;
+}
+
+.collapsible .collapsible-header {
+font-size: 1.2rem;
+padding: 10px 15px;
+background-color: #f5f5f5;
+border-bottom: 1px solid #ddd;
+}
+
+.collapsible .collapsible-body {
+padding: 0 15px 15px;
+}
+
+.collapsible-header i.material-icons {
+margin-right: 0.5rem;
+}
+        .diagram-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 15px;
+          background-color: #fff;
+          border-radius: 8px;
+          margin: 5px 0;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          transition: transform 0.2s ease;
+        }
+        .diagram-item:hover {
+          transform: translateX(5px);
+        }
+        .diagram-actions i {
+          cursor: pointer;
+          margin-left: 12px;
+          transition: color 0.3s ease;
+        }
+        .diagram-actions i:hover {
+          color: #26a69a;
+        }
+
+             .subgroup-heading {
+          font-size: 1.1em;
+          font-weight: 500;
+          margin: 0.5em 0;
+          padding-left: 1em;
+          color: #555;
+        }
+
+        /* Spinner for loading config */
+        #config-spinner {
+          display: none;
+          text-align: center;
+          margin-top: 20px;
+        }
+                #config-spinner .preloader-wrapper {
+          display: inline-block;
+        }
+                .section-header {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 10px;
+        }
+          .add-row {
+          margin-top: 20px;
+        }
+/* Off-page stroke example */
+.offPage {
+stroke: red;
+stroke-width: 2px;
+}
+
+
+
+/* Zoom button styles */
+.zoom-button {
+width: 2.5rem;
+height: 2.5rem;
+background: #fff;
+color: #3B82F6;
+border: 1px solid #ddd;
+border-radius: 0.4rem;
+}
+
+/* 17. Additional Responsive Fixes */
+@media (max-width: 600px) {
+.zoom-controls {
+bottom: 10px;
+right: 10px;
+padding: 5px;
+gap: 5px;
+}
+
+display: block;
+}
+
+width: 100%;
+position: relative;
+height: auto;
+border-right: none;
+box-shadow: none;
+border-bottom: 1px solid #e0e0e0;
+padding: 15px;
+background: #ffffff;
+}
+
+font-size: 1.2rem;
+}
+
+.search-container {
+margin: 0.5rem 0;
+justify-content: center;
+}
+  .search-controls {
+          position: relative;
+        }
+              #clearSearch {
+          position: absolute;
+          right: 10px;
+          top: 14px;
+          cursor: pointer;
+          display: none;
+          color: #9e9e9e;
+        }
+/* ========== SEARCH BAR ========== */
+.search-bar-container {
+padding: 1rem;
+margin-bottom: 1.5rem;
+border-radius: 8px;
+background-color: #fafafa;
+}
+.search-filter-row {
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+gap: 1rem;
+}
+.search-filter-row .input-field {
+flex: 2;
+position: relative;
+min-width: 300px;
+max-width: 600px;
+}
+.search-filter-row input[type="text"] {
+width: 100%;
+height: 48px;
+padding: 0.8rem;
+box-sizing: border-box;
+border: 1px solid #00796b;
+border-radius: 4px;
+transition: border-color 0.3s ease;
+}
+.search-filter-row input[type="text"]:focus {
+border-color: #004d40;
+outline: none;
+}
+
+/* ========== EXPAND/COLLAPSE ========== */
+.expand-collapse-row {
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+gap: 1rem;
+margin-bottom: 1rem;
+}
+.expand-collapse-row .btn {
+padding: 0.6rem 1.2rem;
+font-size: 1rem;
+border-radius: 6px;
+transition: background-color 0.3s ease;
+}
+.expand-collapse-row .btn:hover {
+background-color: #004d40;
+}
+em; /* Smaller icons on mobile */
+
+
+}
+
+/* 18. Example Light/Dark Mode toggles (optional) */
+body.light-mode {
+background-color: var(--color-light-bg);
+color: var(--color-black);
+}
+
+body.dark-mode {
+background-color: var(--color-dark-bg);
+color: var(--color-white);
+}
+/* Fix Upload Page Layout */
+main.container {
+max-width: 900px;
+padding: 3rem 2rem;
+margin-top: 3rem; /* More spacing from top */
+}
+
+/* Improve Upload Card */
+.card {
+padding: 2rem; /* More padding for better spacing */
+border-radius: 12px;
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+background: #ffffff; /* White card with better contrast */
+}
+
+/* Ensure button consistency */
+.btn {
+background: linear-gradient(135deg, #3B82F6, #2563EB);
+color: white;
+border-radius: 8px;
+padding: 12px 20px;
+vertical-align: middle;
+transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+background: linear-gradient(135deg, #2563EB, #1E40AF);
+transform: scale(1.05);
+}
+.btn i.material-icons {
+line-height: 1;
+font-size: 1.2rem;
+margin-right: 0.5rem;
+vertical-align: middle;
+}
+.file-field .btn {
+background: linear-gradient(135deg, #3B82F6, #2563EB);
+color: white;
+border-radius: 8px;
+padding: 12px 24px;
+font-size: 1rem;
+}
+.file-field .btn:hover {
+background: linear-gradient(135deg, #2563EB, #1E40AF);
+transform: scale(1.05);
+}
+/* Improve file input width */
+
+.file-path-wrapper input {
+border: 2px solid #3B82F6;
+border-radius: 6px;
+padding: 12px;
+font-size: 1rem;
+width: 100%;
+}

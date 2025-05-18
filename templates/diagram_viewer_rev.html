@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>{{ root_name }} - {{ diagram_name }}</title>
+    <!-- Ace Editor & Extensions -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.19.0/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.19.0/ext-language_tools.min.js"></script>
+    <!-- SVG Pan Zoom -->
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+    <!-- Mermaid (ES Module) -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs" type="module"></script>
+    <!-- Materialize CSS & Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!-- Custom Styles -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+    {% include "header.html" %}
+</head>
+<body class="light-mode" data-root-name="{{ root_name }}">
+<div class="container main-content">
+    <!-- Title & Theme Toggle -->
+    <div class="row valign-wrapper mb-1">
+        <div class="col s9 m10">
+            <h4>{{ diagram_name.replace('.mmd', '') }} Diagram</h4>
+        </div>
+        <div class="col s12 m2 mb-3">
+            <button class="btn waves-effect waves-light full-width" id="toggle-theme">
+                <i class="material-icons">brightness_6</i>Toggle Theme
+            </button>
+        </div>
+    </div>
+    <!-- Toolbar Row -->
+    <div class="row toolbar-row">
+        <div class="col s12 m2 mb-3">
+            <button class="btn waves-effect waves-light full-width" id="toggle-editor-button">
+                <i class="material-icons left">edit</i>Editor
+            </button>
+        </div>
+        <div class="col s12 m6 search-container mb-3">
+            <div class="input-field relative">
+                <input aria-label="Search diagram" class="search-input" id="search-svg-input"
+                       placeholder="Search diagram..." type="text"/>
+                <i class="material-icons clear-icon" id="clear-search">close</i>
+            </div>
+        </div>
+        <div class="col s12 m2 mb-3">
+            <button class="btn waves-effect waves-light full-width" id="search-svg-button">
+                <i class="material-icons left">search</i>Search
+            </button>
+        </div>
+        <div class="col s12 m2 zoom-controls">
+            <button aria-label="Zoom In" class="zoom-button" id="zoom-in-button" title="Zoom In">
+                <i class="material-icons">zoom_in</i>
+            </button>
+            <button aria-label="Zoom Out" class="zoom-button" id="zoom-out-button" title="Zoom Out">
+                <i class="material-icons">zoom_out</i>
+            </button>
+            <button aria-label="Reset Zoom" class="zoom-button" id="reset-zoom-button" title="Reset Zoom">
+                <i class="material-icons">refresh</i>
+            </button>
+        </div>
+    </div>
+    <!-- Editor Container (Collapsed by default) -->
+    <section class="editor-container card-panel grey lighten-4 collapsed" id="editor-container">
+        <div aria-label="Mermaid Diagram Editor" id="editor" role="textbox" tabindex="0">Loading...</div>
+    </section>
+    <!-- Diagram Container with Spinner Overlay -->
+    <section class="diagram-container card-panel grey lighten-4">
+        <div class="spinner-overlay" id="spinner-overlay">
+            <div class="spinner-container">
+                <div class="preloader-wrapper big active">
+                    <div class="spinner-layer spinner-blue">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                    <div class="spinner-layer spinner-red">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                    <div class="spinner-layer spinner-yellow">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                    <div class="spinner-layer spinner-green">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div aria-live="polite" class="mermaid" id="diagram-preview"></div>
+    </section>
+</div>
+<!-- Materialize JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<!-- Diagram Viewer Logic -->
+<script src="{{ url_for('static', filename='js/diagram_viewer.js') }}" type="module"></script>
+</body>
+</html>

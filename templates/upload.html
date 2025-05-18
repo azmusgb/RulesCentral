@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Upload Diagrams - Rules Central</title>
+    <!-- Materialize CSS & Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!-- Inter Font -->
+    <link href="https://rsms.me/inter/inter.css" rel="stylesheet"/>
+    <!-- Custom Styles (Optional) -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+    {% include 'header.html' %}
+</head>
+<body>
+<main class="container animated-content">
+    <!-- Title Section -->
+    <section class="section">
+        <div class="row">
+            <div class="col s12">
+                <h4 class="center-align">Upload Diagrams</h4>
+                <p class="center-align">
+                    Upload your <strong>.json</strong> diagram files for processing.
+                </p>
+            </div>
+        </div>
+    </section>
+    <!-- File Upload Form Section -->
+    <section class="section">
+        <div class="row">
+            <div class="col s12 m8 offset-m2 l6 offset-l3">
+                <form action="{{ url_for('routes.upload_file') }}"
+                      enctype="multipart/form-data"
+                      id="uploadForm"
+                      method="POST">
+                    <div class="card hoverable">
+                        <div class="card-content">
+                            <!-- Drag and Drop Zone -->
+                            <div class="file-upload-zone" id="dropZone">
+                                <i class="material-icons large">cloud_upload</i>
+                                <p>Drag and drop your JSON files here or click to select</p>
+                                <input accept=".json"
+                                       id="fileInput"
+                                       multiple
+                                       name="files"
+                                       required
+                                       style="display: none;"
+                                       type="file"/>
+                            </div>
+                            <!-- File Summary -->
+                            <div class="file-summary" id="fileSummary">No files selected.</div>
+                            <!-- Submit Button -->
+                            <div class="center-align" style="margin-top: 1rem;">
+                                <button class="btn-large teal waves-effect waves-light" type="submit">
+                                    <i class="material-icons left">file_upload</i>Upload
+                                </button>
+                            </div>
+                            <!-- Progress Bar (hidden by default) -->
+                            <div class="progress" id="progressContainer" style="display: none;">
+                                <div class="indeterminate"></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Feedback Message Section -->
+    <section class="section">
+        <div class="card-panel hide" id="feedback">
+            <span id="feedback-message"></span>
+        </div>
+    </section>
+</main>
+<!-- Materialize JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<!-- External File Upload JS -->
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Home Page - Rules Central</title>
+  <!-- Materialize CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"/>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <!-- Inter Font -->
+  <link href="https://rsms.me/inter/inter.css" rel="stylesheet"/>
+  <!-- Unified Styles -->
+  <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+  
+  <style>
+    /* =====================================================
+       Rules Central
+    ----------------------------------------------------- */
+    
+    /* 1. Global Variables & Reset */
+    :root {
+      /* New Color Palette (fresh, modern, bold) */
+      --color-white: #ffffff;
+      --color-black: #1E293B;
+      --color-light-bg: #f9fafb;
+      --color-dark-bg: #1f2937;
+      
+      /* Primary & Accent Colors */
+      --color-primary: #3B82F6;
+      --color-primary-hover: #2563EB;
+      --color-secondary: #475569;
+      --color-accent: #F97316;
+      --color-gradient-start: #3B82F6;
+      --color-gradient-end: #2563EB;
+      
+      /* Typography */
+      --font-family: 'Inter', sans-serif;
+      --font-family-alt: 'Roboto', sans-serif;
+      --font-size-header: 2.5rem;
+      --font-size-subheader: 1.5rem;
+      --font-size-base: 1rem;
+      --font-size-small: 0.85rem;
+      
+      /* Spacing */
+      --spacing-small: 0.5rem;
+      --spacing-medium: 1rem;
+      --spacing-large: 1.5rem;
+      --spacing-extra-large: 2rem;
+      
+      /* Shadows & Border Radius */
+      --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.08);
+      --shadow-medium: 0 6px 12px rgba(0, 0, 0, 0.15);
+      --shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.15);
+      --border-radius: 0.5rem;
+      
+      /* Transitions */
+      --transition-speed: 0.3s;
+      --transition-ease: ease-in-out;
+    }
+    
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+      font-size: 100%;
+    }
+    
+    /* 2. Body & Global Setup */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to bottom, #f0f4f8, #ffffff);
+      color: #333;
+    }
+    
+    /* Reusable margin utilities */
+    .mb-0 { margin-bottom: 0 !important; }
+    .mb-1 { margin-bottom: 1rem !important; }
+    .mt-2 { margin-top: 2rem !important; }
+    
+    /* Relative positioning for input field */
+    .relative { position: relative; }
+    
+    /* Search input styles */
+    .search-input {
+      border: 1px solid #ccc;
+      border-radius: 0.4rem;
+      font-size: 0.9rem;
+      width: 100%;
+    }
+    
+    /* Full width button */
+    .full-width {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      font-size: 0.9rem;
+    }
+    
+    /* 3. Page Containers & Animations */
+    main.container {
+      margin-top: 2rem;
+      padding: 2rem 1rem;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Additional inline styles for hero and features sections can remain here */
+  </style>
+</head>
+<body>
+  <!-- Navigation (Moved from <head> to here in a <header> element for semantic correctness) -->
+  <header>
+    <div class="navbar-fixed">
+      <nav aria-label="Main Navigation" class="main-nav blue-grey darken-4">
+        <div class="nav-wrapper container">
+          <div class="nav-links">
+            <!-- Desktop Navigation Links (Right) -->
+            <ul class="right nav-links hide-on-med-and-down">
+              <li><a aria-label="Home" href="/">Home</a></li>
+              <li><a aria-label="Upload" href="/upload">Upload</a></li>
+              <li><a aria-label="Catalog" href="/catalog">Catalog</a></li>
+              <li><a aria-label="Search" href="/search">Search</a></li>
+              <li><a aria-label="Configuration" href="/config">Configuration</a></li>
+              <li><a aria-label="API Test Utility" href="/api_test_utility">API Test Utility</a></li>
+              <li><a aria-label="Rules Extraction Utility" href="/rules_extraction_utility">Rules Extraction Utility</a></li>
+            </ul>
+          </div>
+          <!-- Mobile Navigation Trigger -->
+          <a aria-label="Toggle navigation menu" class="sidenav-trigger" data-target="mobile-menu" href="#">
+            <i class="material-icons">menu</i>
+          </a>
+        </div>
+      </nav>
+    </div>
+    <!-- Mobile Menu -->
+    <ul class="sidenav" id="mobile-menu">
+      <li><a aria-label="Home" href="/">Home</a></li>
+      <li><a aria-label="Upload" href="/upload">Upload</a></li>
+      <li><a aria-label="Catalog" href="/catalog">Catalog</a></li>
+      <li><a aria-label="Search" href="/search">Search</a></li>
+      <li><a aria-label="Configuration" href="/config">Configuration</a></li>
+      <li><a aria-label="API Test Utility" href="/api_test_utility">API Test Utility</a></li>
+      <li><a aria-label="Rules Extraction Utility" href="/rules_extraction_utility">Rules Extraction Utility</a></li>
+    </ul>
+  </header>
+  
+  <main class="container animated-content">
+    <!-- Hero Section -->
+    <section class="section hero-section center-align">
+      <div class="row">
+        <div class="col s12">
+          <img alt="Rules Central Logo" class="responsive-img logo-main" src="{{ url_for('static', filename='images/RulesCentralLogo.png') }}"/>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <h1>Rules Central</h1>
+          <p class="tagline">Enhancing Claims Processing Efficiency</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m8 offset-m2">
+          <p class="intro-text">
+            Rules Central is a comprehensive solution for Claims Product, Business,
+            and Platform teams. It extracts, visualizes, and publishes claims
+            pre-processing rules, streamlining your operations and boosting productivity.
+          </p>
+          <p class="intro-text">
+            By replacing manual processes with dynamic, API-enabled workflows,
+            Rules Central provides complete traceability, facilitates testing, and
+            enhances production support.
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="section features-section">
+      <div class="row">
+        <div class="col s12">
+          <h2 class="section-title center-align">Key Features</h2>
+        </div>
+      </div>
+      <div class="row features-row">
+        <div class="col s12 m4">
+          <div class="card hoverable feature-card">
+            <div class="card-header center-align">
+              <i class="material-icons">visibility</i>
+              <h5>Visualizes Workflows</h5>
+            </div>
+            <div class="card-content">
+              <p>Dynamic diagrams present your processes clearly and intuitively, ensuring rapid comprehension.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m4">
+          <div class="card hoverable feature-card">
+            <div class="card-header center-align">
+              <i class="material-icons">assignment</i>
+              <h5>Facilitates Test Planning</h5>
+            </div>
+            <div class="card-content">
+              <p>Comprehensive maps help identify test cases and pinpoint regression areas with precision.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m4">
+          <div class="card hoverable feature-card">
+            <div class="card-header center-align">
+              <i class="material-icons">support_agent</i>
+              <h5>Enhances Production Support</h5>
+            </div>
+            <div class="card-content">
+              <p>Detailed visual representations aid in troubleshooting, ensuring minimal downtime.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  {% include 'footer.html' %}
+  
+  <!-- Materialize JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Configuration Manager - Rules Central</title>
+    <!-- MATERIALIZE CSS & ICONS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    {% include "header.html" %}
+</head>
+<body>
+<main class="container">
+    <h4 class="center-align">Configuration Manager</h4>
+    <p class="center-align">Manage all configuration settings from <code>config.json</code>.</p>
+    <!-- Loading Spinner -->
+    <div id="config-spinner">
+        <div class="preloader-wrapper active">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+        <p>Loading configuration...</p>
+    </div>
+    <!-- Translations Management -->
+    <section class="card-panel white z-depth-2">
+        <div class="section-header">
+            <i class="material-icons">translate</i>
+            <h5>Manage Translations</h5>
+        </div>
+        <table class="highlight responsive-table">
+            <thead>
+            <tr>
+                <th>Key</th>
+                <th>Value</th>
+                <th class="center-align">Actions</th>
+            </tr>
+            </thead>
+            <tbody id="translations-body"></tbody>
+        </table>
+        <div class="row add-row">
+            <div class="input-field col s5">
+                <input id="new-translation-key" placeholder="Translation Key" required type="text"/>
+            </div>
+            <div class="input-field col s5">
+                <input id="new-translation-value" placeholder="Translation Value" required type="text"/>
+            </div>
+            <div class="col s2 center-align">
+                <button class="btn waves-effect waves-light blue" id="add-translation">
+                    <i class="material-icons left">add</i>Add
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- Node Display Attributes -->
+    <section class="card-panel white z-depth-2">
+        <div class="section-header">
+            <i class="material-icons">visibility</i>
+            <h5>Node Display Attributes</h5>
+        </div>
+        <ul class="collection" id="node-attribute-list"></ul>
+        <div class="row add-row">
+            <div class="input-field col s10">
+                <input id="new-node-attribute" placeholder="Node Display Attribute" required type="text"/>
+            </div>
+            <div class="col s2 center-align">
+                <button class="btn waves-effect waves-light blue" id="add-node-attribute">
+                    <i class="material-icons left">add</i>Add
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- Displayed Attributes -->
+    <section class="card-panel white z-depth-2">
+        <div class="section-header">
+            <i class="material-icons">list</i>
+            <h5>Displayed Rule Attributes</h5>
+        </div>
+        <ul class="collection" id="attribute-list"></ul>
+        <div class="row add-row">
+            <div class="input-field col s10">
+                <input id="new-attribute" placeholder="Displayed Rule Attribute" required type="text"/>
+            </div>
+            <div class="col s2 center-align">
+                <button class="btn waves-effect waves-light blue" id="add-attribute">
+                    <i class="material-icons left">add</i>Add
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- Manage Rule Attributes -->
+    <section class="card-panel white z-depth-2">
+        <div class="section-header">
+            <i class="material-icons">settings</i>
+            <h5>Rule Attributes Mapping</h5>
+        </div>
+        <ul class="collection" id="rule-attribute-list"></ul>
+        <div class="row add-row">
+            <div class="input-field col s5">
+                <input id="new-rule-attribute-key" placeholder="Rule Attribute Key" required type="text"/>
+            </div>
+            <div class="input-field col s5">
+                <input id="new-rule-attribute-value" placeholder="Rule Attribute Value" required type="text"/>
+            </div>
+            <div class="col s2 center-align">
+                <button class="btn waves-effect waves-light blue" id="add-rule-attribute">
+                    <i class="material-icons left">add</i>Add
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- Save Button -->
+    <div class="center-align">
+        <button class="btn waves-effect waves-light teal" id="save-button">
+            <i class="material-icons left">save</i>Save All Changes
+        </button>
+    </div>
+</main>
+{% include "footer.html" %}
+<!-- Materialize JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="{{ url_for('static', filename='js/config.js') }}"></script>
+</body>
+</html>

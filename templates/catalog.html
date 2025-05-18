@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Diagram Catalog - Rules Central</title>
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"/>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <style>
+        .diagram-item {
+        display: flex;
+        justify-content: space-between;
+        }
+    </style>
+    {% include 'header.html' %}
+</head>
+<body>
+<div class="container">
+    <h3 class="header">Diagram Catalog</h3>
+    <!-- Search Bar with Clear Button -->
+    <div class="row search-controls">
+        <div class="input-field col s12 m8">
+            <i class="material-icons prefix">search</i>
+            <input id="searchInput" onkeyup="debouncedFilterCatalog()" type="text">
+            <label for="searchInput">Search diagrams...</label>
+            <i class="material-icons" id="clearSearch" onclick="clearSearch()">clear</i>
+        </div>
+    </div>
+    <!-- Expand/Collapse All Buttons -->
+    <div class="row expand-collapse-buttons">
+        <button class="btn waves-effect waves-light teal" onclick="expandAll()">Expand All</button>
+        <button class="btn waves-effect waves-light teal" onclick="collapseAll()">Collapse All</button>
+    </div>
+    <!-- Collapsible Catalog -->
+    <ul class="collapsible" id="catalogContainer"></ul>
+    <div id="noResults">No matching diagrams found.</div>
+</div>
+<!-- Materialize JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="{{ url_for('static', filename='js/catalog.js') }}"></script>
+</body>
+</html>

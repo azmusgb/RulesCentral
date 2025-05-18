@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>API Test Utility - Rules Central</title>
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"/>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    {% include 'header.html' %}
+</head>
+<body>
+<main class="container animated-content" role="main">
+    <!-- API Test Form Section -->
+    <section class="section">
+        <div class="row">
+            <div class="col s12">
+                <h4 class="center-align">API Test Utility</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m10 offset-m1 l8 offset-l2">
+                <div class="card hoverable">
+                    <div class="card-content">
+                        <form aria-label="API Test Form" id="apiForm">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input aria-label="API Endpoint" aria-required="true" id="endpoint" name="endpoint"
+                                           required type="text" value="/webhook_listener">
+                                    <label for="endpoint">Endpoint</label>
+                                    <span class="helper-text" data-error="Invalid endpoint" data-success=""></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+        <textarea aria-label="Request Body (JSON format)" aria-required="true"
+                  class="materialize-textarea"
+                  id="body" name="body" required rows="6"></textarea>
+                                    <label for="body">Body (JSON format)</label>
+                                    <span class="helper-text" data-error="Invalid JSON format" data-success=""></span>
+                                </div>
+                            </div>
+                            <div class="row center-align">
+                                <button aria-label="Send API Request" class="btn-large waves-effect waves-light"
+                                        type="submit">
+                                    <i class="material-icons left">send</i>Send Request
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Response Section -->
+    <section class="section">
+        <div aria-live="polite" class="card-panel teal lighten-4 hide result-card" id="result-section" role="status">
+            <h5 class="center-align">Response</h5>
+            <pre id="result-message"></pre>
+            <div class="center-align">
+                <button class="btn-flat" id="copyButton">Copy Response</button>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- Spinner Overlay -->
+<div aria-hidden="true" class="spinner-overlay" id="spinner">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+                <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+<!-- Materialize JS -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='js/api_test_utility.js') }}"></script>
+</body>
+</html>

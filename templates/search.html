@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Search Diagrams - Rules Central</title>
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Custom Styles -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+    {% include "header.html" %}
+</head>
+<body>
+<!-- Spinner Overlay -->
+<div aria-live="assertive" class="spinner-overlay" id="spinner">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+                <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row search-container">
+        <div class="col s12 m8 offset-m2">
+            <h4 class="center-align">Search Diagrams</h4>
+            <div class="input-field">
+                <input aria-label="Search Diagrams" id="search-input" placeholder="Enter search query..." type="text">
+                <label for="search-input">Search Diagrams</label>
+            </div>
+            <div class="center-align" style="margin-top: 10px;">
+                <button class="btn waves-effect waves-light" id="search-button">
+                    <i class="material-icons left">search</i>Search
+                </button>
+                <button class="btn red lighten-1 waves-effect waves-light" id="clear-button">
+                    <i class="material-icons left">clear</i>Clear
+                </button>
+            </div>
+        </div>
+    </div>
+    <div aria-live="polite" class="row" id="results">
+        <!-- Results will load here -->
+    </div>
+</div>
+<!-- jQuery and Materialize JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="{{ url_for('static', filename='js/search.js') }}"></script>
+</body>
+</html>
